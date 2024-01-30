@@ -22,6 +22,26 @@ class PostRepository implements IPostRepository {
 
         return post;
     }
+
+    public async listarPosts(): Promise<{ id: number; titulo: string; conteudo: string; idUsuario: number; }[]> {
+        const posts = await prismaClient.post.findMany();
+
+        return posts;
+    }
+
+    public async atualizarPost(id: number, titulo: string, conteudo: string): Promise<{ id: number; titulo: string; conteudo: string; idUsuario: number; }> {
+        const post = await prismaClient.post.update({
+            where: {
+                id: Number(id)
+            },
+            data:{
+                titulo,
+                conteudo
+            }
+        });
+
+        return post;
+    }
 }
 
 export { PostRepository };
